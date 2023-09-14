@@ -1,0 +1,41 @@
+// Keywords: 
+
+// set up a simple neutral simulation
+initialize()
+{
+	// set the overall mutation rate
+	initializeMutationRate(2.5e-9);
+	
+	// m1 mutation type: neutral
+	initializeMutationType("m1", 0.0, "f", 0.0);
+	
+	// g1 genomic element type: uses m1 for all mutations
+	initializeGenomicElementType("g1", m1, 1.0);
+	
+	// uniform chromosome of length 250 Mb
+	initializeGenomicElement(g1, 0, 249999999);
+	
+	// uniform recombination along the chromosome
+	initializeRecombinationRate(1e-8);
+}
+
+// create a population of N individuals
+1 { 
+sim.addSubpop("p1", 1000);
+sim.addSubpop("p2", 1000);
+} 
+
+1: 10000 late() 
+{ 
+p1.setMigrationRates(p2, 0.005); 
+p2.setMigrationRates(p1, 0.005); 
+} 
+
+10000 late() { sample1 = p1.sampleIndividuals(50);  
+ sample2 = p2.sampleIndividuals(50);
+ c(sample1.genomes, sample2.genomes).output();
+ cat(paste(sample1.subpopulation.id, "\n"));
+ cat(paste(sample2.subpopulation.id, "\n"));
+
+
+}

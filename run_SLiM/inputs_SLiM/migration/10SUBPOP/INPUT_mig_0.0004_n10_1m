@@ -1,0 +1,139 @@
+// Keywords: 
+
+// set up a simple neutral simulation
+initialize()
+{
+	// set the overall mutation rate
+	initializeMutationRate(1e-9);
+	
+	// m1 mutation type: neutral
+	initializeMutationType("m1", 0.0, "f", 0.0);
+	
+	// g1 genomic element type: uses m1 for all mutations
+	initializeGenomicElementType("g1", m1, 1.0);
+	
+	// uniform chromosome of length 250 Mb
+	initializeGenomicElement(g1, 0, 249999999);
+	
+	// uniform recombination along the chromosome
+	initializeRecombinationRate(1e-8);
+}
+
+// create a population of N individuals
+1 { 
+sim.addSubpop("p1", 500);
+sim.addSubpop("p2", 500);
+sim.addSubpop("p3", 500);
+sim.addSubpop("p4", 500);
+sim.addSubpop("p5", 500);
+sim.addSubpop("p6", 500);
+sim.addSubpop("p7", 500);
+sim.addSubpop("p8", 500);
+sim.addSubpop("p9", 500);
+sim.addSubpop("p10", 500);
+} 
+
+1: 10000 late() 
+{ 
+p1.setMigrationRates(p2, 0.0004); 
+p1.setMigrationRates(p3, 0.0004); 
+p1.setMigrationRates(p4, 0.0004); 
+p1.setMigrationRates(p5, 0.0004); 
+p1.setMigrationRates(p6, 0.0004); 
+p1.setMigrationRates(p7, 0.0004); 
+p1.setMigrationRates(p8, 0.0004); 
+p1.setMigrationRates(p9, 0.0004); 
+p1.setMigrationRates(p10, 0.0004); 
+
+p2.setMigrationRates(p1, 0.0004); 
+p2.setMigrationRates(p3, 0.0004); 
+p2.setMigrationRates(p4, 0.0004); 
+p2.setMigrationRates(p5, 0.0004); 
+p2.setMigrationRates(p6, 0.0004); 
+p2.setMigrationRates(p7, 0.0004); 
+p2.setMigrationRates(p8, 0.0004); 
+p2.setMigrationRates(p9, 0.0004); 
+p2.setMigrationRates(p10, 0.0004); 
+
+p3.setMigrationRates(p1, 0.0004); 
+p3.setMigrationRates(p2, 0.0004); 
+p3.setMigrationRates(p4, 0.0004); 
+p3.setMigrationRates(p5, 0.0004); 
+p3.setMigrationRates(p6, 0.0004); 
+p3.setMigrationRates(p7, 0.0004); 
+p3.setMigrationRates(p8, 0.0004); 
+p3.setMigrationRates(p9, 0.0004); 
+p3.setMigrationRates(p10, 0.0004); 
+
+p4.setMigrationRates(p1, 0.0004); 
+p4.setMigrationRates(p2, 0.0004); 
+p4.setMigrationRates(p3, 0.0004); 
+p4.setMigrationRates(p5, 0.0004); 
+p4.setMigrationRates(p6, 0.0004); 
+p4.setMigrationRates(p7, 0.0004); 
+p4.setMigrationRates(p8, 0.0004); 
+p4.setMigrationRates(p9, 0.0004); 
+p4.setMigrationRates(p10, 0.0004); 
+
+p5.setMigrationRates(p1, 0.0004); 
+p5.setMigrationRates(p2, 0.0004); 
+p5.setMigrationRates(p3, 0.0004); 
+p5.setMigrationRates(p4, 0.0004); 
+p5.setMigrationRates(p6, 0.0004); 
+p5.setMigrationRates(p7, 0.0004); 
+p5.setMigrationRates(p8, 0.0004); 
+p5.setMigrationRates(p9, 0.0004); 
+p5.setMigrationRates(p10, 0.0004); 
+
+p6.setMigrationRates(p1, 0.0004); 
+p6.setMigrationRates(p2, 0.0004); 
+p6.setMigrationRates(p3, 0.0004); 
+p6.setMigrationRates(p4, 0.0004); 
+p6.setMigrationRates(p5, 0.0004); 
+p6.setMigrationRates(p7, 0.0004); 
+p6.setMigrationRates(p8, 0.0004); 
+p6.setMigrationRates(p9, 0.0004); 
+p6.setMigrationRates(p10, 0.0004); 
+
+p7.setMigrationRates(p1, 0.0004); 
+p7.setMigrationRates(p2, 0.0004); 
+p7.setMigrationRates(p3, 0.0004); 
+p7.setMigrationRates(p4, 0.0004); 
+p7.setMigrationRates(p5, 0.0004); 
+p7.setMigrationRates(p6, 0.0004); 
+p7.setMigrationRates(p8, 0.0004); 
+p7.setMigrationRates(p9, 0.0004); 
+p7.setMigrationRates(p10, 0.0004); 
+
+p8.setMigrationRates(p1, 0.0004); 
+p8.setMigrationRates(p3, 0.0004); 
+p8.setMigrationRates(p4, 0.0004); 
+p8.setMigrationRates(p5, 0.0004); 
+p8.setMigrationRates(p6, 0.0004); 
+p8.setMigrationRates(p7, 0.0004); 
+p8.setMigrationRates(p9, 0.0004); 
+p8.setMigrationRates(p10, 0.0004); 
+
+p9.setMigrationRates(p1, 0.0004); 
+p9.setMigrationRates(p2, 0.0004); 
+p9.setMigrationRates(p3, 0.0004); 
+p9.setMigrationRates(p4, 0.0004); 
+p9.setMigrationRates(p5, 0.0004); 
+p9.setMigrationRates(p6, 0.0004); 
+p9.setMigrationRates(p7, 0.0004); 
+p9.setMigrationRates(p8, 0.0004); 
+p9.setMigrationRates(p10, 0.0004); 
+
+p10.setMigrationRates(p1, 0.0004); 
+p10.setMigrationRates(p2, 0.0004); 
+p10.setMigrationRates(p3, 0.0004); 
+p10.setMigrationRates(p4, 0.0004); 
+p10.setMigrationRates(p5, 0.0004); 
+p10.setMigrationRates(p6, 0.0004); 
+p10.setMigrationRates(p7, 0.0004); 
+p10.setMigrationRates(p8, 0.0004); 
+p10.setMigrationRates(p9, 0.0004); 
+
+} 
+
+10000 late() { sim.outputFull(); } 
