@@ -1,0 +1,80 @@
+// Keywords: 
+
+// set up a simple neutral simulation
+initialize()
+{
+	// set the overall mutation rate
+	initializeMutationRate(5e-9);
+	
+	// m1 mutation type: neutral
+	initializeMutationType("m1", 0.0, "f", 0.0);
+
+	// m2 mutation type: inversion marker
+	initializeMutationType("m2", 0.5, "f", 0.0);
+	
+	// g1 genomic element type: uses m1 for all mutations
+	initializeGenomicElementType("g1", m1, 1.0);
+	
+	// uniform chromosome of length 250 Mb
+	initializeGenomicElement(g1, 0, 249999999);
+	
+	// uniform recombination along the chromosome
+	initializeRecombinationRate(1e-8);
+}
+
+// create a population of N individuals
+1 { sim.addSubpop("p1", 1000); }
+9990 { p1.setSubpopulationSize(100); }
+
+1 late() {
+         // give half the population the inversion
+         inverted = sample(p1.individuals, integerDiv(p1.individualCount, 2));
+         inverted.genomes.addNewDrawnMutation(m2, 100000000);
+}
+fitness(m2) {
+         // fitness of the inversion is frequency-dependent
+         f = sim.mutationFrequencies(NULL, mut);
+         return 1.0 - (f - 0.5) * 0.2;
+}
+recombination() {
+         if (genome1.containsMarkerMutation(m2, 100000000) ==
+              genome2.containsMarkerMutation(m2, 100000000))
+            return F;
+         inInv = (breakpoints > 100000000) & (breakpoints < 150000000);
+         if (!any(inInv))
+return F;
+         breakpoints = breakpoints[!inInv];
+return T; }
+
+10000 late() {
+         sim.outputFixedMutations();
+         // Assess fixation inside vs. outside the inversion
+         pos = sim.substitutions.position;
+         cat(sum((pos >= 100000000) & (pos < 150000000)) + " inside inversion.\n");
+         cat(sum((pos < 100000000) | (pos >= 150000000)) + " outside inversion.\n");
+}
+
+1:10000 late() {
+	if (sim.generation % 1000 != 0)
+            return;
+         // assess the prevalence of the inversion
+         pScr = "sum(applyValue.genomes.containsMarkerMutation(m2, 100000000));";
+         p = sapply(p1.individuals, pScr);
+         p__ = sum(p == 0);
+         pI_ = sum(p == 1);
+         pII = sum(p == 2);
+         cat("Generation " + format("%4d", sim.generation) + ": ");
+         cat(format("%3d", p__) + " --   ");
+         cat(format("%3d", pI_) + " I-   ");
+         cat(format("%3d", pII) + " II\n");
+	if (p__ == 0) stop("Inversion fixed!");
+ 	if (pII == 0) stop("Inversion lost!");
+
+}
+
+// run to generation
+10000
+{
+	sim.outputFull();
+	//sim.simulationFinished();
+ }
