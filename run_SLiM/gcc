@@ -1,0 +1,1 @@
+time cc -o READSLIMOUT3_SLIM3 -w -O -static READSLIMOUT3_SLIM3.c genlib.c -lm
